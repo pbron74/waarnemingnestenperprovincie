@@ -11,20 +11,28 @@ jobs:
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
-    - name: Set up Python
+    - name: Install Python
       uses: actions/setup-python@v4
       with:
         python-version: '3.11'
 
-    - name: Install dependencies
+    - name: Install Google Chrome
+      run: |
+        choco install googlechrome --no-progress
+
+    - name: Install Python dependencies
       run: |
         python -m pip install --upgrade pip
         pip install pyinstaller
-        if (Test-Path "requirements.txt") { pip install -r requirements.txt }
+        pip install selenium
+        pip install webdriver-manager
+        pip install pandas
+        pip install openpyxl
+        pip install requests
 
-    - name: Build EXE with PyInstaller
+    - name: Build EXE
       run: |
         pyinstaller waarnemingnestenperprovincie.pyw `
           --onedir `
@@ -32,8 +40,9 @@ jobs:
           --name AHnestenprovincie `
           --icon=AziatischeHoornaar.ico
 
-    - name: Upload build artifact
+    - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
         name: AHnestenprovincie
         path: dist/AHnestenprovincie
+

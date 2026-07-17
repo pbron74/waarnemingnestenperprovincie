@@ -19,7 +19,8 @@ jobs:
         python-version: '3.11'
 
     - name: Install Google Chrome
-      run: choco install googlechrome --no-progress
+      run: |
+        winget install Google.Chrome --accept-source-agreements --accept-package-agreements
 
     - name: Install Python dependencies
       run: |

@@ -29,10 +29,7 @@ jobs:
     - name: Determine Selenium path
       id: selenium
       run: |
-        python - << 'EOF' > selenium_path.txt
-        import selenium, os
-        print(os.path.dirname(selenium.__file__))
-        EOF
+        python -c "import selenium, os; print(os.path.dirname(selenium.__file__))" > selenium_path.txt
 
     - name: Build EXE with Selenium included
       run: |
